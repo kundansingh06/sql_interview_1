@@ -40,3 +40,7 @@ select Salary from CTE where densrank=2;
 WITH CTE AS(
     select * , dense_rank() over (order by salary desc) as densrank from Employee)
 select Salary from CTE where densrank=3;
+
+select salary from(
+select *, dense_rank() over (order by salary desc) as densrank from Employee) as emp
+where densrank=3
