@@ -26,3 +26,17 @@ WHERE 2-1 = (SELECT COUNT(DISTINCT e2.Salary) FROM Employee e2
 
 select salary as thirdhigh_salary from Employee e1 where 3-1=
 (select count(distinct salary ) from Employee e2 where e2.Salary> e1.Salary)
+
+-- using TOP N
+select top 1 salary from (
+select top 3 salary from Employee order by salary desc) as emp order by Salary
+
+-- using rank
+
+WITH CTE AS(
+select * , dense_rank() over (order by salary desc) as densrank from Employee)
+select Salary from CTE where densrank=2;
+
+WITH CTE AS(
+    select * , dense_rank() over (order by salary desc) as densrank from Employee)
+select Salary from CTE where densrank=3;
